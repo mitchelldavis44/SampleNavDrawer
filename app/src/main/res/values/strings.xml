@@ -31,5 +31,9 @@
         <string name="appwidget_text">EXAMPLE</string>
         <string name="add_widget">Add widget</string>
         <string name="title_activity_main2">Main2Activity</string>
+    <string name="ssidtxt">SSID</string>
+    <string name="ssidtitle">SSID:</string>
+    <string name="choose">Choose</string>
+
 
 </resources>

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.DhcpInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,12 +17,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,12 +44,33 @@ public class MainActivity extends AppCompatActivity
     private EditText ip;
     private EditText aip;
 
+    public String   s_dns1 ;
+    public String   s_dns2;
+    public String   s_gateway;
+    public String   s_ipAddress;
+    public String   s_leaseDuration;
+    public String   s_netmask;
+    public String   s_serverAddress;
+    TextView info;
+    DhcpInfo d;
+    WifiManager wifii;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Display SSID
+
+        WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = wifi.getConnectionInfo();
+        String ssid = info.getSSID();
+        TextView ssidTextView = (TextView) findViewById(R.id.infolbl);
+        ssidTextView.setText(ssid);
+
+        // External IP and Internal EditText
 
         ip = (EditText) findViewById(R.id.extip);
         aip = (EditText) findViewById(R.id.androidip);
@@ -127,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             startActivity(new Intent(this, MainActivity.class));
         } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(this, Settings.class));
+            startActivity(new Intent(this, SettingsDialog.class));
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -212,7 +238,7 @@ public class MainActivity extends AppCompatActivity
             } else {
                 aip.setText(andIP);
             }
-            Snackbar.make(findViewById(android.R.id.content), "IP Address is up to date", Snackbar.LENGTH_LONG).setActionTextColor(Color.WHITE)
+            Snackbar.make(findViewById(android.R.id.content), "Up to date", Snackbar.LENGTH_LONG).setActionTextColor(Color.WHITE)
                     .setAction("DISMISS", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

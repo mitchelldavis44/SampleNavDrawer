@@ -1,6 +1,7 @@
 package com.mts2792.samplenavdrawer;
 
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,13 +10,14 @@ import android.view.MenuItem;
 /**
  * Created by mitchelldavis on 6/5/16.
  */
-public class Settings extends AppCompatActivity {
+public class Settings extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        addPreferencesFromResource(R.xml.prefs);
 
     }
 
